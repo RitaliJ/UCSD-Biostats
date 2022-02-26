@@ -1,0 +1,63 @@
+"Gene.names","FPKM.Value1","FPKM.Value2","Functions","Glycogen","Cuticle","Immunity","Lipid","Stress","Transcription"
+"Chitinase-like_protein_idgf4-like","0.69647","0.30353","Cuticle development",FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+"Keratin,_type_ii_cytoskeletal_1-like","0.727171","0.272829","Cuticle development",FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+"Acyl-coa_delta(11)_desaturase-like","0.727213","0.272787","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Dihydrolipoyllysine-residue_succinyltransferase_component_of_2-
+oxoglutarate_dehydrogenase_complex,_mitochondrial-like","0.67952","0.32048","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"E3_ubiquitin-protein_ligase_huwe1-like","0.67815","0.32185","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Organic_cation_transporter_protein-like","0.726954","0.273046","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Phosphatidylinositol_transfer_protein_alpha_isoform-like","0.667248","0.332752","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Phosphoglycerate_kinase-like","0.703087","0.296913","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Protein_disulfide-isomerase_a3-like","0.674556","0.325444","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Protein_disulfide-isomerase-like","0.688358","0.311642","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Ryanodine_receptor_44F-like","0.67623","0.32377","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Titin-like","0.746613","0.253387","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Ubiquilin-4-like","0.727694","0.272306","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Zinc_finger_MIZ_domain-containing_protein_1-like","0.773121","0.226879","Homeostasis and glycogen metabolism",TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+"Alpha-tocopherol_transfer_protein-like","0.323968","0.676032","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Annexin-B9-like","0.31487","0.68513","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Apidaecins_type_73-like","0.795945","0.204055","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Catalase-like","0.686933","0.313067","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Cytochrome_P450_6A1-like","0.331538","0.668462","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Hymenoptaecin-like","0.954524","0.045476","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Metalloproteinase_inhibitor_3-like","0.325193","0.674807","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Transferrin-like","0.744511","0.255489","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Tyrosine_3-monooxygenase-like","0.835842","0.164158","Homeostasis and Innate immunity",FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+"Angiotensin-converting_enzyme-like","0.316548","0.683452","Lipid metabolism",FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+"Antithrombin-III-like","0.68233","0.31767","Lipid metabolism",FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+"Elongation of_very_long_chain_fatty_acids_protein-like","0.32431","0.67569","Lipid metabolism",FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+"Esterase_E4-like","0.788934","0.211066","Lipid metabolism",FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+"Inositol_monophosphatase_3-like","0.322404","0.677596","Lipid metabolism",FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+"Major_royal_jelly_protein_5-like","0.270481","0.729519","Lipid metabolism",FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+"Platelet_glycoprotein_V-like","0.813305","0.186695","Lipid metabolism",FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+"Putative_fatty_acyl-coa_reductase_CG5065-like","0.300971","0.699029","Lipid metabolism",FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+"Actin-binding_Rho-activating_protein-like","0.732058","0.267942","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Aldose_reductase-like","0.711625","0.288375","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Battenin-like","0.67964","0.32036","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Coatomer_subunit_alpha-like","0.702495","0.297505","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Guanine_nucleotide-binding_protein_G(i)_subunit_alpha-like","0.315979","0.684021","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Ion_transport_peptide-like","0.293113","0.706887","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Laccase-5-like","0.225355","0.774645","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"MAP_kinase-interacting_serine/threonine-protein_kinase_2-like","0.68638","0.31362","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Neurotrimin-like","0.732356","0.267644","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Pecanex-like_protein_1-like","0.738818","0.261182","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Pleckstrin_homology_domain-containing_family_M_member_1-like","0.676048","0.323952","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Protein_sel-1_homolog_1-like","0.701529","0.298471","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Putative_inorganic_phosphate_cotransporter-like ","0.327162","0.672838","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Serine/threonine-protein_phosphatase_PP1-beta-like","0.685594","0.314406","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Splicing_factor,_arginine/serine-rich_15-like","0.712525","0.287475","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Sterol_O-acyltransferase_1-like","0.32746","0.67254","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"Vitellogenin-like","0.17271","0.82729","Stress response",FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+"60_kda_heat_shock_protein,_mitochondrial-like","0.687219","0.312781","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"Actin,_clone_205-like","0.691597","0.308403","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"Biorientation_of_chromosomes_in_cell_division_protein_1-like_1-like","0.310198","0.689802","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"Cyclin-dependent_kinase_6-like","0.207638","0.792362","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"Importin_subunit_alpha-7-like","0.714825","0.285175","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"L-lactate_dehydrogenase-like","0.744176","0.255824","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"Multidrug_resistance_protein_homolog_49-like","0.700666","0.299334","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"NF-kappa-B_inhibitor_cactus-like","0.68616","0.31384","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"Nuclear_receptor_coactivator_3-like","0.711662","0.288338","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"Protein_TAPT1_homolog","0.723039","0.276961","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"Retinal-specific_ATP-binding_cassette_transporter-like","0.705437","0.294563","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"T-complex_protein_1_subunit_delta-like","0.688213","0.311787","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+"V-type_proton_atpase_116_kda_subunit_a_isoform_1-like","0.694501","0.305499","Transcriptional regulation",FALSE,FALSE,FALSE,FALSE,FALSE,TRUE

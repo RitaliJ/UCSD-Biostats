@@ -1,0 +1,4 @@
+"0","Shi.CEC <- read.csv(""Shi_CEC.csv"")"
+"0","ggplot(data=Shi.CEC, aes(x=BaP, y=CEC, fill=LPS)) +"
+"0","  geom_boxplot()"
+"0",""

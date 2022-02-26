@@ -1,0 +1,6 @@
+"0",""
+"0","ggplot(data=fly.hindleg.RSPM.df, aes(x=L)) +"
+"0","  geom_histogram() +"
+"0","  ggtitle(""Histogram of RSPM deposition of site L flies"") +"
+"0","  xlab(""L"") +"
+"0","  ylab(""count"")"

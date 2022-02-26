@@ -1,0 +1,2 @@
+"0","CEC.additive <- aov(formula= CEC ~ BaP+LPS, data=Shi.CEC)"
+"0","CEC.interact <- aov(formula= CEC ~ BaP*LPS, data=Shi.CEC)"

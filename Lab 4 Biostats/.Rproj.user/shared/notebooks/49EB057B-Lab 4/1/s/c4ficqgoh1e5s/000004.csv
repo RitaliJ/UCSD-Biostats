@@ -1,0 +1,3 @@
+"0","specific.observed <- c( observed.frequencies[specific.function], sum(observed.frequencies) - observed.frequencies[specific.function] )"
+"0",""
+"0","specific.expected <- c( expected.frequencies.df[specific.function,], sum(expected.frequencies.df) - expected.frequencies.df[specific.function,]) "

@@ -1,0 +1,5 @@
+"0","site <- ordered(c(""rural"", ""low"", ""moderate"", ""high""), "
+"0","                c(""rural"", ""low"", ""moderate"", ""high""))"
+"0","IBI.mean <- colMeans(IBI.wide)"
+"0","IBI.sd <- apply(X=IBI.wide, MARGIN=2, FUN=sd)"
+"0","IBI.df <- data.frame(site, IBI.mean, IBI.sd)"

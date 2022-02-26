@@ -1,0 +1,90 @@
+---
+title: "Lab 3"
+author: "Ritali Jain"
+date: "1/31/2022"
+output: html_document
+---
+
+# Hypotheses and Significance Testing using Floral Visitation Data
+
+```{r}
+all.data.df <- read.csv("floral_visitation.csv")
+```
+
+## Q1
+Test is whether the sites of low and moderate pollution are significantly different in either direction
+
+Null Hypothesis: 
+The pollution level of a site does not affect the number of floral bee visits at the site
+
+Alternative Hypothesis: 
+The pollution level of a site affects the number of floral bee visits at the site.
+
+OR
+
+Null Hypothesis:
+The site with low pollution has the same amount of floral bee visits as the site with moderate pollution.
+
+Alternative Hypothesis:
+The site with low pollution has a different amount of floral bee visits as the site with moderate pollution.
+
+
+## Q2
+Mathematical Representation of the Hypotheses
+
+Null Hypothesis: L visits = M visits
+
+Alternative Hypothesis: L visits != M visits
+
+## Q3
+The pollution column corresponds to the independent variable. The bees column corresponds to the dependent variable.
+
+## Q4
+The experimental design of this paper involves several controlled variables, including:
+1) Species of Tecoma (Tecoma stans)
+2) Observations and collections made during morning bee visitation times
+3) Sites visited within the same time period to mitigate weather or seasonal concerns (Temperature, humidity, and wind speed)
+4) No pesticide application
+5) No shade from other trees
+
+```{r}
+clean.df <- data.frame(all.data.df[, "pollution"], all.data.df[, "bees"])
+colnames(clean.df) <- c("pollution", "bees") #code for changing column names
+```
+
+## Q5 
+The default column names that R gave to the new data frame are all.data.df....pollution.. and all.data.df....bees..
+
+```{r}
+clean.df$pollution == "low"
+low.df <- clean.df[clean.df$pollution == "low", ]
+moderate.df <- clean.df[clean.df$pollution == "moderate", ]
+```
+```{r}
+low.vector <- low.df$bees
+moderate.vector <- moderate.df$bees
+```
+
+Generating a P-value and the difference in means between the two sites’ samples
+```{r}
+# run t-test for a p-value and save results to variables
+t.result <- t.test(low.vector, moderate.vector)
+p.value <- t.result[["p.value"]]
+mean.difference <- mean(low.vector) - mean(moderate.vector)
+# output results
+print(paste("P-value:", p.value))
+print(paste("Difference (low - moderate):", mean.difference))
+```
+
+## Q6
+If the null hypothesis is actually true, then there is a 0.141125867013416 % chance that a repetition of this experiment would yield a result (mean difference) of 26.7894736842105 or something more extreme.
+
+## Q7
+Based on an alpha (significance threshold) of 0.05, we should reject the null hypothesis because the resulting p-value is 0.00141125867013416, which is less than 0.05.
+
+## Q8
+Assume that bees from both the lowly- and moderately-polluted sites behave in the same way. If the P-value was 0.1, the null hypothesis would not be rejected, as the p-value is not less than the alpha level. This would not lead to an error because the null hypothesis, or the statement "The pollution of the site does not affect the number of bees visiting", would hold true, which is in fact the case here.
+
+## Q9 
+Assume that bees from the lowly-polluted site are less inclined to pollinate
+T. stans than those from the moderately-polluted site. If I got a P-value of 0.1, the null hypothesis would not be rejected as the p-value is not less than the alpha level. This means that the statement "The pollution of the site does not affect the number of bees visiting" would hold true, even though the lowly-polluted site should have fewer bees. This keads to a Type II Error, because we are failing to reject the null hypothesis when it is in fact false.

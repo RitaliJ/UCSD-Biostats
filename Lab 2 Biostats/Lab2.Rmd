@@ -1,0 +1,91 @@
+---
+title: "Lab 2"
+author: "Ritali Jain"
+date: "1/29/22"
+output: html_document
+---
+
+# Using pollution and weather data from the Fort McMurray area in Canada to visualize data in ggplot2
+
+```{r}
+library("ggplot2")
+library("tidyr")
+```
+
+```{r}
+data.box <- read.csv("Wentworth_PAH_ER.csv")
+WBEA.data <- read.csv("WBEA_PM_O3.csv")
+data.line <- read.csv("Wentworth_fig2.csv")
+```
+
+```{r}
+ggplot(data=data.box, aes(x=Date, y=ER)) +
+  geom_boxplot()
+```
+
+```{r}
+wide.data <- pivot_wider(data.box, values_from = ER, names_from = Date)
+May06 <- mean(wide.data$May06)
+May18 <- mean(wide.data$May18)
+May24 <- mean(wide.data$May24)
+x.bar <- c("May 06", "May 18", "May 24")
+y.bar <- c(May06, May18, May24)
+data.bar <- data.frame(x.bar, y.bar)
+
+ggplot(data=data.bar, aes(x=x.bar,y=y.bar)) +
+  geom_col(aes(fill=x.bar))
+
+```
+
+## Q1
+An advantage of using a box plot over a bar plot is that you are able to use all of the data at once to determine quartiles and outliers, which can help show the distribution of the data. An advantage of using a bar plot over a box plot is that bar plots only use a single value for each bar. Therefore, you can plot specific values or summaries using a bar plot.
+
+```{r}
+ggplot(data=WBEA.data, aes(x=PM2.5)) +
+  geom_histogram() +
+  ggtitle("Particulate matter on Dec 1, 2021 at AMS 7") + # plot title
+  xlab("PM2.5 (ug/mˆ3)") + # x-axis label
+  ylab("Frequency") # y-axis label
+```
+
+## Q2
+Histograms are useful in displaying frequency distributions based on quantitative data. They usually display the counts/frequencies on the y-axis for a continuous x-variable using bins. In this example of a histogram, the counts for particulate matter of different sizes is displayed.
+
+```{r}
+ggplot(data=WBEA.data, aes(x=PM2.5,y=O3)) +
+  geom_point(aes(color=Temp)) +
+  ggtitle("Air quality data from Dec 1 2021 (no fire) for AMS 7") +
+  xlab("PM2.5 (ug/mˆ3)") +
+  ylab("O3 (ppb)")
+```
+
+## Q3
+Scatter plots are used to visualize data when trying to determine a relationship between multiple variables. 
+
+An example scenario where it would be most appropriate to visualize data with a scatter plot is examining the relationship between the size of a fire and the resultant economic damage. The 'Acres burned' variable would go on the x-axis and the 'Financial Losses' variable would go on the y-axis. We could determine the direction and strength of the relationship between the size of the fire and how much financial loss it causes.
+
+## Q4
+One hypothesis that this scatter plot supports is that there is an inverse relationship between particulate matter (2.5) and ozone. Also, temperature  seems to impact the concentrations as data points with similar temperatures cluster together.
+
+```{r}
+PM.plot <- ggplot(data=data.line, aes(x=Day, y=Value, color=Site)) +
+  geom_line(aes(group=Site))
+PM.plot +
+  geom_point() + #add scatterplot-like points on top of line graph
+  ggtitle("PM levels at AMS1, AMS6, & AMS7 in May 2016") +
+  xlab("Day in May") +
+  ylab("PM Value")
+
+```
+
+## Q5
+This combination of data isn’t included as one graph anywhere
+in the paper. This line graph shows how PM levels differ across different sites in May 2016. On the other hand, the figures in the paper attempt to determine how the wildfire specifically causes changes in PM levels and how it affects specific PM composition ratios.
+
+## Q6
+I find the patterns in this graph interesting. The particulate matter levels increase and decrease around the same times for all 3 sites. For some sites, the particular matter value increases much more rapidly than others. I found it intriguing that the particulate matter value at AMS6 increased, decreased, and increased again extremely rapidly within a span of few days. One other conclusion that I am making is that the fire was most likely contained near AMS1 first, as the particulate matter did not increase significantly after Day 8.
+
+## Q7 
+Comparing this line plot (from the 2016 wildfire) to the histogram (from December 1 2021 during a non-fire period), we can conclude that normal 
+PM2.5 levels are usually under 7 ug/m^3, but the wildfire causes the PM2.5 levels to rapidly shoot up, even above 1200 ug/m^3. This means that wildfires directly contribute to high PM levels and decreased air quality, which poses great risk for human health.
+

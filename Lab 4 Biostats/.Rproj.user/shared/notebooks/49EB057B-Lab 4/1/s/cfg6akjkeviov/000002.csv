@@ -1,0 +1,7 @@
+"0","# Create frequencies for the observed DEGs data"
+"0","observed.frequencies <- table(antennae.DEGs.df$Functions)"
+"0","observed.frequencies[""Other""] <- 0"
+"0",""
+"0","# Normalize the observed and expected frequencies using proportions"
+"0","observed.normalized <- observed.frequencies/sum(observed.frequencies)"
+"0","expected.normalized <- expected.frequencies.df$Genome.frequency/sum(expected.frequencies.df$Genome.frequency)"

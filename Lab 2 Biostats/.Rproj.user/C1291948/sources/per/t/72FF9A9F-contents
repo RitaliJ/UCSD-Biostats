@@ -1,0 +1,18 @@
+---
+title: "Lab 2"
+author: "Ritali Jain"
+date: "1/31/22"
+output: html_document
+---
+
+Testing whether plots work
+```{r cars}
+library(ggplot2)
+data.df = read.csv("Wentworth_et_al_data.csv")
+
+ggplot(data=data.df, aes(x=X, y=BaP)) +
+  geom_col(aes(x=X, y=BaP))
+
+ggplot( data = iris, aes( x = Species, y = Petal.Length) ) +
+  geom_boxplot()
+```

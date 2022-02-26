@@ -1,0 +1,6 @@
+"0","#Plot histograms of RSPM deposition to determine which site has more normal data"
+"0","ggplot(data=fly.hindleg.RSPM.df, aes(x=H)) +"
+"0","  geom_histogram() +"
+"0","  ggtitle(""Histogram of RSPM deposition of site H flies"") +"
+"0","  xlab(""H"") +"
+"0","  ylab(""count"")"

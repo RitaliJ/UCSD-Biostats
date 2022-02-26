@@ -1,0 +1,160 @@
+---
+title: "Lab5"
+author: "Ritali Jain"
+date: "2/21/2022"
+output: html_document
+---
+# Lab 5: Analysis of variance (ANOVA)
+
+## One-way ANOVA
+```{r}
+library("ggplot2")
+library("tidyr")
+```
+```{r}
+IBI.wide <- read.csv("bee_interbeat.csv")
+IBI.long <- pivot_longer(IBI.wide, 1:4, names_to="site", values_to="IBI")
+```
+
+## Q1
+
+An ANOVA is more appropriate than a t-test here because we are testing to see whether there is any difference in SD interbeat interval between bees from the four differently-polluted sites. We are comparing the SD IBIs for more than two groups.
+
+## Q2
+
+Null hypothesis (Ho): There is no difference in SD interbeat interval between bees from the four differently-polluted sites.
+
+Alternative hypothesis (Ha): The SD interbeat interval of bees from at least one site differs significantly from the rest of the sites.
+
+```{r}
+site <- ordered(c("rural", "low", "moderate", "high"), 
+                c("rural", "low", "moderate", "high"))
+IBI.mean <- colMeans(IBI.wide)
+IBI.sd <- apply(X=IBI.wide, MARGIN=2, FUN=sd)
+IBI.df <- data.frame(site, IBI.mean, IBI.sd)
+```
+```{r}
+ggplot(data=IBI.df, aes(x=site, y=IBI.mean)) +
+  geom_col(aes(fill=site)) +
+  geom_errorbar( aes(ymin = IBI.mean - IBI.sd,
+                     ymax = IBI.mean + IBI.sd,
+                     width=0.1 )) +
+  geom_jitter(data=IBI.long, aes(x=site, y=IBI), width=0.2, height=0 )
+  
+```
+
+## Q3
+
+Based on visual inspection, the mean SD IBI for the highly polluted site seems significantly higher than for the other sites.
+
+```{r}
+IBI.anova <- aov(formula= IBI~site, data=IBI.long)
+hist(IBI.anova$residuals)
+```
+
+## Q4
+
+In each group for the bee IBI data, there are 15 observations.
+```{r}
+summary(IBI.anova)
+```
+
+## Q5
+
+The degrees of freedom for the independent variable (site) is 3, because there are 4 levels in the variable and df = n-1 = 4-1 = 3.
+
+## Q6
+
+The degrees of freedom for the residuals is 56. The residual degrees of freedom is the total number of observations minus the number of levels of the independent variable(s). Here that is df = n - k = 60-4 = 56.
+
+## Q7
+
+I would reject the null hypothesis because the p-value is less than alpha (3.37e-07 < 0.05). The statistical significance indicates that the SD IBI of at least one of the groups significantly differs from the rest of the sites.
+
+```{r}
+TukeyHSD(IBI.anova)
+```
+
+## Q8
+
+The SD interbeat interval for bees from the highly polluted site significantly differed from that of bees from the other sites. The independent variable was the site and there were 4 levels based on the level of pollution, including rural, low, moderate, and high. In other words, there were 3 degrees of freedom. The dependent variable was the SD IBI. The SD IBI was measured for 15 bees for each site (sample site for each group was 15), so the total sample size was 60. An one-way ANOVA test was run with alpha = 0.05, resulting in an F-statistic of 14.76 and p = 3.37e-07 < 0.05. Since this result was significant, it was followed by Tukey's HSD test, again with alpha = 0.05. The p-value was <0.05 for all comparisons involving the highly polluted site. This result is statistically significant and implies that the SD IBI for bees from the highly polluted site significantly differed from that of bees from the other sites.
+
+## Two-way ANOVA
+
+```{r}
+Shi.CEC <- read.csv("Shi_CEC.csv")
+ggplot(data=Shi.CEC, aes(x=BaP, y=CEC, fill=LPS)) +
+  geom_boxplot()
+
+```
+
+```{r}
+CEC.additive <- aov(formula= CEC ~ BaP+LPS, data=Shi.CEC)
+CEC.interact <- aov(formula= CEC ~ BaP*LPS, data=Shi.CEC)
+```
+
+## Q9 Hypothesis Testing for ANOVA with interaction
+
+Pair I
+Null Hypothesis: There is no difference in CEC activity regardless of whether BaP is present or not.
+Alternative Hypothesis: There is a difference in CEC activity based on whether BaP is present or not.
+
+Pair II
+Null Hypothesis: There is no difference in CEC activity regardless of whether LPS is present or not.
+Alternative Hypothesis: There is a difference in CEC activity based on whether LPS is present or not.
+
+Pair III
+Null Hypothesis: The effect of BaP on CEC activity does not depend on the effect of LPS on CEC activity.
+Alternative Hypothesis: There is an interaction effect between BaP and LPS presence on CEC activity.
+
+
+## Q10 Hypothesis Testing for additive ANOVA
+
+Pair I
+Null Hypothesis: There is no difference in CEC activity regardless of whether BaP is present or not.
+Alternative Hypothesis: There is a difference in CEC activity based on whether BaP is present or not.
+
+Pair II
+Null Hypothesis: There is no difference in CEC activity regardless of whether LPS is present or not.
+Alternative Hypothesis: There is a difference in CEC activity based on whether LPS is present or not.
+
+```{r}
+hist(CEC.additive$residuals)
+hist(CEC.interact$residuals)
+```
+
+```{r}
+summary(CEC.additive)
+summary(CEC.interact)
+```
+
+## Q11 Output for interaction ANOVA
+
+For the independent variable BaP, there is 1 degree of freedom. The F-value is 462.38, which corresponds to a p-value of 5.98e-11. For the independent variable LPS, there is also 1 degree of freedom. The F-value is 31.83, which corresponds to a p-value of 0.000109. For the interaction between BaP and LPS, there is 1 degree of freedom. The F-value is 31.83 and the p-value is 0.000109. The degrees of freedom for the residuals is 12.
+
+```{r}
+TukeyHSD(CEC.additive)
+TukeyHSD(CEC.interact)
+```
+
+
+## Q12
+
+There are differences between the additive ANOVA and the ANOVA with interaction. 
+The F-values for BaP and LPS as independent variables were higher in the ANOVA with interaction compared to the additive ANOVA, and therefore, the p-values were lower in the ANOVA with interaction. Thus, we saw more statistical significance when checking for interaction between the two independent variables.
+In the post-hoc tests, the additive ANOVA only made 2 comparisons. Meanwhile, the ANOVA with interactions made those two comparisons, along with all the possible comparisons between the two independent variables to check for interaction, so a total of 8 comparisons.
+
+
+## Q13 Conclusions from the test with interaction
+
+There does seem to be an interaction effect between BaP and LPS. In the ANOVA, the p-value for the interaction was p=0.000109<0.05. This is less than our alpha.
+
+Looking at the post-hoc tests, we can see conclude there is an interaction effect because p < 0.05 in the following: 
+
+CEC activity does change when LPS is present depending on whether BaP is present or not (p=5e-07<0.05).
+CEC activity does change when LPS is not present depending on whether BaP is present or not (p=0e+00<0.05).
+
+CEC activity does change when BaP is present depending on whether LPS is present or not (p=2e-05<0.05).
+CEC activity does not change depending on whether LPS is present or not when BaP is not present (p=1>0.05).
+
+The p-value is also <0.05 when we compare no BaP and no LPS with BaP and LPS. The p-value is also <0.05 when we compare BaP and no LPS with no BaP and LPS. 

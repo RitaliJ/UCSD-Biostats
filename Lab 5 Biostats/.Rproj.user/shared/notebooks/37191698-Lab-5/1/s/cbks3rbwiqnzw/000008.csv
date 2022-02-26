@@ -1,0 +1,2 @@
+"0","IBI.anova <- aov(formula= IBI~site, data=IBI.long)"
+"0","hist(IBI.anova$residuals)"

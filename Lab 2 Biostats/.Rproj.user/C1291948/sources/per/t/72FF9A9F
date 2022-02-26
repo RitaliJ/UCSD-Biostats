@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1643244431460.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "17687985",
+    "id" : "72FF9A9F",
+    "lastKnownWriteTime" : 1643245956,
+    "last_content_update" : 1643245956442,
+    "path" : "~/RFiles/Biostatistics/Lab 2 Biostats/Lab2.Rmd",
+    "project_path" : "Lab2.Rmd",
+    "properties" : {
+        "cursorPosition" : "16,16",
+        "scrollLine" : "1",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

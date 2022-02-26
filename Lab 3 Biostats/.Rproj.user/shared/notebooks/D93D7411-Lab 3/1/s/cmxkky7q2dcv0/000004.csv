@@ -1,0 +1,2 @@
+"0","clean.df <- data.frame(all.data.df[, ""pollution""], all.data.df[, ""bees""])"
+"0","colnames(clean.df) <- c(""pollution"", ""bees"") #clean.df columns are already named this but this is the code to be used if you want to change column names"

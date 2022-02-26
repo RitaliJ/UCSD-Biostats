@@ -1,0 +1,6 @@
+"0","ggplot(data=IBI.df, aes(x=site, y=IBI.mean)) +"
+"0","  geom_col(aes(fill=site)) +"
+"0","  geom_errorbar( aes(ymin = IBI.mean - IBI.sd,"
+"0","                     ymax = IBI.mean + IBI.sd,"
+"0","                     width=0.1 )) +"
+"0","  geom_jitter(data=IBI.long, aes(x=site, y=IBI), width=0.2, height=0 )"

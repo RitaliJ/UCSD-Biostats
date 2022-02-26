@@ -1,0 +1,2 @@
+"0","IBI.wide <- read.csv(""bee_interbeat.csv"")"
+"0","IBI.long <- pivot_longer(IBI.wide, 1:4, names_to=""site"", values_to=""IBI"")"
