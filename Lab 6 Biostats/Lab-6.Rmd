@@ -1,0 +1,172 @@
+---
+title: "Lab-6"
+author: "Ritali Jain"
+date: "2/26/2022"
+output: html_document
+---
+
+# Lab 6: Regression and MANOVA
+Data from NCBI’s Gene Expression Omnibus, accession number GSE102016.
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(biotools)
+library(ltm)
+```
+```{r}
+logFC <- read.csv("Shi_logFC_subset.csv")
+```
+Assumptions for applying Linear Regression:
+• The observations were independent (validated by proper experimental design)
+• The relationship is linear
+• The residuals are normally distributed
+• Variance for the residuals is homoscedastic (i.e., homogeneous)
+• No data point is “pulling” on the regression too much
+
+
+Data Visualizations:
+```{r}
+BaP.plot <- ggplot(data=logFC, aes(x=combination, y=BaP)) +
+  geom_jitter(shape=1)
+
+LPS.plot <- ggplot(data=logFC, aes(x=combination, y=LPS)) +
+  geom_jitter(shape=1)
+
+BaP.plot
+LPS.plot
+```
+
+## Q1
+Both comparisons in the plots seem to have some correlation. Both would be positive correlations. The comparison between LPS and combination looks like a much stronger correlation.
+
+```{r}
+lm.BaP <- lm(formula=combination~BaP, data = logFC)
+summary(lm.BaP)
+```
+```{r}
+cor.test(~ combination + BaP, data = logFC)
+```
+
+
+## Q2
+A correlation does exist between BaP and combination, as the p-value of the linear model comparison is <2e-16 and the p-value of Pearson's product-moment correlation is <2.2e-16, which is less than the alpha of 0.05. This means we can reject the null hypothesis (that the true correlation is equal to 0). Based on Pearson's product-moment correlation, the correlation between the variables is 0.46, and based on the linear model, the correlation is 0.59 (although the R^2 of the linear model is 0.21 which suggests an insufficient model). The correlation between BaP and combination seems to be mildly positive.
+
+## Q3
+If the BaP value were high for a gene, then combination is likely to be high for that same gene.
+
+```{r}
+BaP.plot +
+  geom_smooth( method = lm )
+```
+
+```{r}
+LPS.plot +
+  geom_smooth( method = lm )
+```
+
+
+## Q4
+Complementary Hypotheses for Multiple Linear Regression
+
+Null Hypothesis: The coefficients of all of the predictor variables (BaP, LPS, BaP:LPS) in the model are simultaneously equal to 0. (H0: β1 = β2= βk != 0)
+
+Alternative Hypothesis: The coefficients of all of the predictor variables (BaP, LPS, BaP:LPS) in the model are not simultaneously equal to 0. (HA: β1 = β2 = βk != 0)
+
+```{r}
+lm.both <- lm(formula=combination~BaP*LPS, data=logFC)
+summary(lm.both)
+```
+```{r}
+correlation.both <- sqrt(summary(lm.both)$r.squared)
+correlation.both
+```
+
+## Q5
+The multiple linear regression has a much stronger correlation than the simple linear regression performed on BaP and combination. The multiple linear regression has a strong correlation of 0.87 while the simple linear regression had a mild correlation of 0.46. Furthermore, the R-squared of the multiple linear regression is 0.75, meaning that the BaP, LPS, and interaction variables together account for 75% of the variance in the combination variable. Meanwhile, the R-squared of the simple linear regression was 0.21, which means that 21% of variance in the combination variable is explained by BaP alone.
+
+## Q6
+The variables with a significant impact on the combination variable are BaP (with a p-value of 1.09e-15 < 0.05) and LPS (with a p-value of <2e-16 < 0.05). The interaction between BaP and LPS did not have a significant influence on the combination variable (its p-value was 0.53 > 0.05). The correlation between the combination variable and the independent variables BaP and LPS is strong, as the correlation coefficient is 0.87. The multiple linear regression model performs decently as its R-squared is 0.75, which means that about 75% of the variance in the combination variable is attributed to BaP and LPS.
+
+## Q7
+Based on the results of the multiple linear regression, the value of the combination variable is strongly dependent on the values of the gene in the BaP alone and LPS alone groups. Furthermore, since the model substantially improved after adding the LPS variable and going from a single linear regression to multiple linear regression, we can conclude that the values derived from the LPS alone group are especially valuable predictors of the values obtained in the combination group.
+
+```{r}
+manova.genes <- read.csv("Shi_Cyp1a2_Cyp1b1.csv")
+```
+```{r}
+#Data normalized to control mean as 1
+ggplot( data = manova.genes, aes( x = condition )) +
+  geom_jitter( aes(y = Cyp1b1, color="Cyp1b1"), width=0.15, height=0, shape=1 ) +
+  geom_jitter( aes(y = Cyp1a2, color="Cyp1a2"), width=0.15, height=0, shape=1 ) +
+  ylab("Expression")
+```
+```{r}
+ggplot( data = manova.genes, aes( x = condition )) +
+  geom_jitter( aes(y = Cyp1b1.transform, color="Cyp1b1.transform"), width=0.15, height=0, shape=1 ) +
+  geom_jitter( aes(y = Cyp1a2.transform, color="Cyp1a2.transform"), width=0.15, height=0, shape=1 ) +
+  ylab("Expression")
+```
+
+
+## Q8
+Complementary Hypotheses for MANOVA  (Cyp1a2.transform and Cyp1b1.transform are the dependent variables, condition is the independent variable)
+
+Null Hypothesis: The dependent variable mean of Cyp1a2.transform is equal to the dependent variable mean of Cyp1b1.transform for all conditions (Ho: µ1 = µ2).
+
+Alternative Hypothesis: The dependent variable mean of Cyp1a2.transform is not equal to the dependent variable mean of Cyp1b1.transform for at least one condition (Ho: µ1 != µ2).
+
+## Q9
+Based on this plot, I think the null will not be rejected because the data for Cyp1a2.transform and Cyp1b1.transform follows a very similar pattern and is nearly overlayed. Therefore, I would think that the means of these two variables are practically the same.
+
+```{r}
+# Checking our assumptions to run MANOVA
+
+# Equality of variance/covariance matrices: Box’s M test from the biotools package. Failure to reject the null means the data passed this test.
+boxM(manova.genes[ , c("Cyp1a2.transform", "Cyp1b1.transform")], manova.genes$condition)
+
+# Reliability of variables: Cronbach alpha value
+cronbach.alpha(manova.genes[ , c("Cyp1a2.transform", "Cyp1b1.transform") ])
+
+# Correlation: A very low correlation might suggest that regular univariate ANOVAs are a better approach. A very high correlation violates the assumption of no multicollinearity. 
+cor.test(manova.genes$Cyp1a2.transform, manova.genes$Cyp1b1.transform)
+```
+
+```{r}
+# Check for linearity
+ggplot(data=manova.genes, aes(x=Cyp1a2.transform, y=Cyp1b1.transform)) +
+  geom_point()
+
+```
+
+
+## Q10
+Based on the scatterplot of Cyp1a2.transform vs Cyp1b1.transform, I think the data does not pass the test for linearity. As Cyp1a2.transform increases and approaches 0.27, Cyp1b1.transform also increases. After Cyp1a2.transform surpasses 0.27 however, Cyp1b1.transform seems to be  constant. There are also some outliers skewing the relationship.
+
+```{r}
+# Test for normality
+
+# univariate tests for each condition group
+shapiro.test(manova.genes[1:3,6])
+shapiro.test(manova.genes[1:3,7])
+shapiro.test(manova.genes[4:7,6])
+shapiro.test(manova.genes[4:7,7])
+shapiro.test(manova.genes[8:11,6])
+shapiro.test(manova.genes[8:11,7])
+shapiro.test(manova.genes[12:15,6])
+shapiro.test(manova.genes[12:15,7])
+# tests for all conditions within each gene
+shapiro.test(manova.genes$Cyp1a2.transform)
+shapiro.test(manova.genes$Cyp1b1.transform)
+
+```
+
+```{r}
+manova.results <- manova(formula= cbind(Cyp1a2,Cyp1b1) ~ condition, data=manova.genes )
+summary(manova.results)
+```
+
+
+## Q11
+I do not reject the null hypothesis because the p-value of the MANOVA is 0.8669 which is greater than the alpha value of 0.05. This means that  the treatment condition does not cause different changes in Cyp1a2 expression and Cyp1b1 expression. In other words, the mean Cyp1a2 expression is affected in the same way by treatment condition as is the mean Cyp1b1 expression. It is important to be cautious with this conclusion, however, as the data for Cyp1b1.transform was not found to be normal for one of the Shapiro tests conducted (p=0.04).
+
