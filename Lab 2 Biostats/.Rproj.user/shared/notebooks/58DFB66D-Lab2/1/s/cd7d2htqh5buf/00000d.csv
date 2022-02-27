@@ -1,5 +1,0 @@
-"0","library(ggplot2)"
-"0","data.df = read.csv(""Wentworth_et_al_data.csv"")"
-"0",""
-"0","ggplot(data=data.df, aes(x=X, y=BaP)) +"
-"0","  geom_col(aes(x=X, y=BaP))"

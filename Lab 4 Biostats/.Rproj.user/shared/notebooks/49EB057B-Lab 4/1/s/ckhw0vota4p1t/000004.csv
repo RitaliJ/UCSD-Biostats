@@ -1,8 +1,0 @@
-"0","#There’s a fruit fly exposed to the highly-polluted site that has a hindleg RSPM deposition of 1%. What percentage of fruit flies exposed to the same site have a lower hindleg RSPM deposition? Determine this using the z-score, which you’ll need to calculate yourself for this individual fruit fly."
-"0",""
-"0","z.score.fly <- (1-mean(high))/sd(high)"
-"0","z.score.fly"
-"1","[1]"
-"1"," -0.7616909"
-"1","
-"

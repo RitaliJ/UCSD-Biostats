@@ -1,8 +1,0 @@
-"0","# Combining the data into a data frame for ggplot"
-"0","chi.bar.data <- data.frame( ""Function""=rep(rownames(expected.frequencies.df), 2),"
-"0","  ""O.or.E""=c(rep(""O"",7),rep(""E"",7)),"
-"0","  ""Proportion""=c(observed.normalized,expected.normalized))"
-"0",""
-"0","# Generating the plot"
-"0","ggplot(data=chi.bar.data, aes(x=Function, y=Proportion, fill=O.or.E)) +"
-"0","  geom_col(position=""dodge"")"

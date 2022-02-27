@@ -1,5 +1,0 @@
-"0","#Load datasets"
-"0","fly.hindleg.RSPM.df <- read.csv(""fly_hindleg_RSPM.csv"")"
-"0","expected.frequencies.df <- read.csv(""expected_frequencies.csv"", row.names=1)"
-"0","fly.interbeat.df <- read.csv(""fly_interbeat.csv"")"
-"0","antennae.DEGs.df <- read.csv(""antennae_DEGs.csv"")"
