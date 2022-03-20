@@ -1,0 +1,158 @@
+---
+title: "Bioinformatics Lab Part 1"
+author: "Ritali Jain"
+date: "3/7/2022"
+output: html_document
+---
+
+# Bioinformatics lab: Part 1
+
+```{r}
+library("limma")
+library("ggplot2")
+```
+```{r}
+all.genes <- read.csv("Shi_all_genes.csv", row.names = 1)
+# Each row represents a gene (with its ID as the row name) and each column is a different sample. The values are normalized, log2-transformed values from the microarrays.
+head(all.genes)
+```
+
+```{r}
+# Transpose data frame and run PCA (all genes)
+all.PCA <- prcomp( t(all.genes) )
+```
+## Q1 
+The first two principal components combined capture about 54.23% of variance.
+
+```{r}
+scree.df <- data.frame( "prop.var" = summary(all.PCA)$importance[2,] ) # prep the dataframe
+PCs <- factor(rownames(scree.df), levels=unique(rownames(scree.df))) # reorder x-axis 
+ggplot(data=scree.df, aes(x = PCs, y = prop.var)) +
+  geom_col() +
+  ylab("Proportion of variance captured") + 
+  xlab("Principal component")
+```
+
+```{r}
+all.PCA.df <- as.data.frame(all.PCA$x) # extract PC coordinates for plotting
+all.PCA.df$condition <- c( rep("control",3),rep("LPS",4),rep("BaP",4),rep("LPS.BaP",4) ) # add condition column to PCA.df
+
+ggplot(data=all.PCA.df, aes(x=PC1, y=PC2)) +
+  geom_point(aes(color=condition, shape=condition))
+```
+
+## Q2 
+The x-axis of this graph is PC1 (principal component 1) and the y-axis of this graph is PC2 (principal component 2). These axes quantify the scores of the samples in terms of the first two principal components that were created. Replicates that are close to each other have more similar gene expression profiles, whereas those far from each other are more dissimilar in gene expression profiles. This is the connection between the PCA score plot and the real-world data.
+
+```{r}
+factors <- factor(
+c(rep("control",3), rep("LPS",4), rep("BaP",4), rep("LPS.BaP",4)), levels=c("control","LPS","BaP","LPS.BaP") )
+factors
+
+# design model for limma
+model <- model.matrix( ~ factors) # create a reference model that compares each of the other conditions to a single reference treatment (control in this case, since it is the first level in factors)
+
+prefit <- lmFit(object=all.genes, design=model)
+fit <- eBayes(prefit) # Bayesian method to find moderated t-statistics and determine which genes are differentially expressed via significance.
+
+colnames(coef(fit)) # coefficients
+
+results <- topTable(fit, number=Inf, p.value=0.05, lfc=1.2) # List the overall DEGs in a test comparing all conditions and control at once
+```
+
+## Q3
+I found 244 differentially expressed genes (DEGs) in this step, with a max p-value of 0.05 and a minimum log fold-change of 1.2.
+
+```{r}
+# Compare each condition to the control individually
+LPS.results <- topTable(fit, coef="factorsLPS", number=Inf)
+BaP.results <- topTable(fit, coef="factorsBaP", number=Inf)
+LPS.BaP.results <- topTable(fit, coef="factorsLPS.BaP", number=Inf)
+```
+```{r}
+# Perform PCA only for the DEGs
+DEGs <- all.genes[rownames(results), ]
+DEG.PCA <- prcomp( t(DEGs) )
+DEG.scree.df <- data.frame( "prop.var" = summary(DEG.PCA)$importance[2,] ) # prep the dataframe
+DEG.PCs <- factor(rownames(DEG.scree.df), levels=unique(rownames(DEG.scree.df))) # reorder x-axis 
+ggplot(data=DEG.scree.df, aes(x = DEG.PCs, y = prop.var)) +
+  geom_col() +
+  ylab("Proportion of variance captured") + 
+  xlab("Principal component")
+
+```
+```{r}
+DEG.PCA.df <- as.data.frame(DEG.PCA$x) # extract PC coordinates for plotting
+DEG.PCA.df$condition <- c( rep("control",3),rep("LPS",4),rep("BaP",4),rep("LPS.BaP",4) ) # add condition column
+ggplot(data=DEG.PCA.df, aes(x=PC1, y=PC2)) +
+  geom_point(aes(color=condition, shape=condition))
+```
+
+
+## Q4
+Roughly 90.34% of variance is captured in the first two principal components of this new PCA (combined).
+
+## Q5
+
+The PCA with DEGs only does a better job differentiating between the sample conditions. Based on the scree plot, PC1 (from DEGs only PCA) by itself accounts for more variance (87.4%) than the first 5 to 6 PCs of the all genes PCA. Furthermore, the samples for the different conditions are more clearly grouped into clusters for the scatter plot for DEGs only compared to the those for the scatter plot for all genes. In the scatter plot for PCA for all genes, we can see that the spread/variance of the samples within groups is larger, so it is harder to differentiate between groups.
+
+## Q6 
+The DEGs-only PCA model better differentiates between the conditions because this model only includes the genes whose expression is being changed between the treatment groups. The other model mostly includes genes which aren't significantly impacted based on the treatment group. So, those genes are causing some variance (due to biological variance), which is affecting the PCA, but they are not genes which change across treatment groups. Therefore, the DEGs model would be better in differentiating between the conditions.
+
+```{r}
+# Making a volcano plot for the LPS-control contrast
+LPS.results$Significance <- "P>0.05 or |logFC|<1.2"
+sign.check <- LPS.results$P.Value<0.05 & abs(LPS.results$logFC)>1.2
+LPS.results$Significance[sign.check] <- "P<0.05 and |logFC|>1.2"
+
+ggplot(data=LPS.results, aes(x=logFC, y = -log10(P.Value))) +
+  geom_point(aes(color=Significance))
+  
+```
+
+```{r}
+# Making a volcano plot for the BaP-control contrast
+BaP.results$Significance <- "P>0.05 or |logFC|<1.2"
+sign.check <- BaP.results$P.Value<0.05 & abs(BaP.results$logFC)>1.2
+BaP.results$Significance[sign.check] <- "P<0.05 and |logFC|>1.2"
+
+ggplot(data=BaP.results, aes(x=logFC, y = -log10(P.Value))) +
+  geom_point(aes(color=Significance))
+  
+```
+
+```{r}
+# Making a volcano plot for the LPS-control contrast
+LPS.BaP.results$Significance <- "P>0.05 or |logFC|<1.2"
+sign.check <- LPS.BaP.results$P.Value<0.05 & abs(LPS.BaP.results$logFC)>1.2
+LPS.BaP.results$Significance[sign.check] <- "P<0.05 and |logFC|>1.2"
+
+ggplot(data=LPS.BaP.results, aes(x=logFC, y = -log10(P.Value))) +
+  geom_point(aes(color=Significance))
+  
+```
+
+
+## Q7
+Ranking the conditions from most DEGs to fewest DEGs as compared to the control condition: LPS.BaP - LPS - BaP
+
+## Q8 
+The BaP and control conditions are most similar. In both PCA plots generated before, we saw that these two conditions clustered on top of each other. From the volcano plot, we can see there are very few DEGs for the BaP condition, meaning the gene expression is not significantly different between the BaP and control groups.
+The control and LPS-BaP conditions are most different. Based on the PCAs, these two clusters are completely distinct and far apart on the score plots. Furthermore, the Volcano plot for LPS-BaP has many DEGs, indicating that many genes are expressed significantly differently from the control group.
+
+```{r}
+# creating the DEG lists for each comparison
+
+LPS.DEGs <- topTable(fit, coef="factorsLPS", number=Inf, p.value=0.05, lfc=1.2, adjust.method="none")
+BaP.DEGs <- topTable(fit, coef="factorsBaP", number=Inf, p.value=0.05, lfc=1.2, adjust.method="none")
+LPS.BaP.DEGs <- topTable(fit, coef="factorsLPS.BaP", number=Inf, p.value=0.05, lfc=1.2, adjust.method="none")
+
+```
+
+```{r}
+# Export DEGs to csv
+write.csv(LPS.DEGs, "LPS_DEGs.csv") 
+write.csv(BaP.DEGs, "BaP_DEGs.csv") 
+write.csv(LPS.BaP.DEGs, "LPS_BaP_DEGs.csv")
+```
+

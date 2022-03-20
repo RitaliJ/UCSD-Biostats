@@ -1,0 +1,39 @@
+File created with BiNGO v3.0.5  (c) on Mar 10, 2022 at 10:44:44 PM
+
+ontology: namespace
+curator:  bingo
+
+Selected ontology file : bundle://187.0:1/data/GO_Biological_Process
+Selected annotation file : bundle://187.0:1/data/M_musculus_default
+Discarded evidence codes : 
+Overrepresentation
+Selected statistical test : Hypergeometric test
+Selected correction : Benjamini & Hochberg False Discovery Rate (FDR) correction
+Selected significance level : 0.05
+Testing option : Use whole annotation as reference set
+The selected cluster :
+72119	19348	20135	17345	19088	14373	68612	22236	67629	52033	378472	13605	636752	320452	11722	51944	434701	20202	20201	215257	235320	74107	69713	232493	404710	19013	20701	100303740	11657	14663	245195	
+
+No annotations were retrieved for the following entities:
+404710	22236	
+
+GO-ID	p-value	corr p-value	x	n	X	N	Description	Genes in test set
+279	9.1759E-6	1.8015E-3	5	288	29	28959	M phase	72119|17345|74107|68612|67629
+51301	1.0137E-5	1.8015E-3	5	294	29	28959	cell division	72119|235320|74107|68612|67629
+22403	1.6432E-5	1.8015E-3	5	325	29	28959	cell cycle phase	72119|17345|74107|68612|67629
+7049	2.7538E-5	1.8015E-3	6	613	29	28959	cell cycle	72119|17345|74107|14373|68612|67629
+22402	3.6046E-5	1.8015E-3	5	383	29	28959	cell cycle process	72119|17345|74107|68612|67629
+280	3.9064E-5	1.8015E-3	4	192	29	28959	nuclear division	72119|74107|68612|67629
+7067	3.9064E-5	1.8015E-3	4	192	29	28959	mitosis	72119|74107|68612|67629
+87	3.9863E-5	1.8015E-3	4	193	29	28959	M phase of mitotic cell cycle	72119|74107|68612|67629
+48285	4.2333E-5	1.8015E-3	4	196	29	28959	organelle fission	72119|74107|68612|67629
+278	8.7011E-5	3.3325E-3	4	236	29	28959	mitotic cell cycle	72119|74107|68612|67629
+5975	8.7815E-4	2.7396E-2	4	434	29	28959	carbohydrate metabolic process	232493|19013|20701|11722
+45113	1.0014E-3	2.7396E-2	1	1	29	28959	regulation of integrin biosynthetic process	20202
+90224	1.0014E-3	2.7396E-2	1	1	29	28959	regulation of spindle organization	72119
+60236	1.0014E-3	2.7396E-2	1	1	29	28959	regulation of mitotic spindle organization	72119
+7610	1.1794E-3	3.0115E-2	4	470	29	28959	behavior	20202|11657|20201|19088
+9987	1.7765E-3	4.0353E-2	17	8929	29	28959	cellular process	72119|20202|19348|20135|17345|235320|74107|19088|232493|14373|68612|19013|20701|67629|52033|13605|14663
+48133	2.0019E-3	4.0353E-2	1	2	29	28959	male germ-line stem cell division	235320
+42078	2.0019E-3	4.0353E-2	1	2	29	28959	germ-line stem cell division	235320
+8356	2.0019E-3	4.0353E-2	1	2	29	28959	asymmetric cell division	235320
